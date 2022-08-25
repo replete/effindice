@@ -20,11 +20,6 @@
 			input[type="radio"],input[type="checkbox"] {transform: translate(-.25em, .65em)}
 			#formatting {color:#555; font-size:0.75em; margin-bottom:2em; display:inline-block;}
 			#formatting label {padding-left:.5em}
-			/* .previouspassphrase { padding:.2em 0; font-size:1.5em; opacity:.4; transition: opacity 1s ease-in}
-			.previouspassphrase:nth-child(1) {font-size:2.75em; opacity:.6} 
-			.previouspassphrase:nth-child(2) {font-size:2.4em; opacity:.54}
-			.previouspassphrase:nth-child(3) {font-size:2.1em; opacity:.50}
-			.previouspassphrase:nth-child(4) {font-size:1.75em; opacity:.45} */
 			#online {position:absolute; top: 5px; right: 5px}
 			#github {background: url('https://github.githubassets.com/apple-touch-icon-57x57.png') no-repeat center left #000; color:#fff; display:inline-block;padding:4px 8px 67px 8px; position: absolute; right: 0; bottom: 0; height: 50px; width:57px; color:transparent}
 			#github:visited {color:#fff}
@@ -52,7 +47,6 @@
 				<input id="delay" type="range" min="1" max="10" value="1" oninput="delayvalue.value=delay.value + delayvalue.getAttribute('data-suffix')">
 				<output id="numwordsvalue" for="numwords" data-suffix=" words">6 words</output>
 				<input id="numwords" type="range" min="4" max="12" value="6" oninput="numwordsvalue.value=numwords.value + numwordsvalue.getAttribute('data-suffix')">				
-				<!-- <button id="online" onclick="getOnlineDiceRolls()">⚠ random.org</button> -->
 				<form id="formatting">
 					<radiogroup id="separator" onchange="displayPassphrase()">
 						<label for="separator_none"><input type="radio" name="separator" value="none" id="separator_none" />no separator</label></label>
@@ -83,52 +77,6 @@
 
 			generate.innerText = generate.getAttribute('data-text');
 			delayvalue.innerText = delay.value + delayvalue.getAttribute('data-suffix');
-
-			// see: https://api.random.org
-			// const apiKey = '1a4743ad-a112-41a6-b846-f509571ba615'; 
-			// const apiEndpoint = 'https://api.random.org/json-rpc/4/invoke';
-
-			// async function requestOnlineDiceRollData(numDiceRolls, id) {
-			// 	try {
-			// 		const response = await fetch(apiEndpoint, {
-			// 			method: 'POST',
-			// 			headers: {
-			// 				'content-type': 'application/json'
-			// 			},
-			// 			body: JSON.stringify({
-			// 				jsonrpc: '2.0',
-			// 				id: id || Date.now(),
-			// 				method: 'generateIntegers',
-			// 				params: {
-			// 					apiKey: apiKey,
-			// 					n: numDiceRolls,
-			// 					min: 1,
-			// 					max: 6
-			// 				}
-			// 			})
-			// 		});
-			// 		if (!response.ok) throw new Error (`HTTP Error ${response.status}`);
-			// 		return await response.json();
-			// 	} catch(e) {
-			// 		console.error(e);
-			// 	}
-			// }
-
-			// function getOnlineDiceRolls(){
-			// 	online.disabled=true;
-			// 	online.innerText = 'requesting...';
-			// 	requestOnlineDiceRollData(5 * numwords.value | 0)
-			// 	.then(res => {
-			// 		// TODO: GAF about validation
-			// 		numbers.value = res.result.random.data.join('');
-			// 		online.innerText = '⚠️ random.org (' + res.result.requestsLeft + ' reqs left today)';
-			// 		online.disabled=false;
-			// 		displayPassphrase();
-			// 	})
-			// 	.catch((e) => {
-			// 		throw new Error(e);
-			// 	})
-			// }
 			
 			function generateDiceRolls(numWords, diceRollTotalDelay) {
 				generate.innerText = generate.getAttribute('data-busy-text');
@@ -141,8 +89,6 @@
 				diceRollTotalDelay = diceRollTotalDelay || delay.value * 1000;
 				numWords = numwords.value | 0;
 
-				// const randomValues = new Uint32Array(1);
-				// const random = new MRG32k3a(window.crypto.getRandomValues(randomValues));
 				const maxGenerationTime = diceRollTotalDelay / (numWords * 5) | 0;
 				const minGenerationTime = maxGenerationTime * 0.7 | 0;
 				const diceRollDelayValues = Array.from(
@@ -167,7 +113,6 @@
 						generate.disabled = false;
 						delay.disabled = false;
 						numwords.disabled = false;
-						// online.disabled = false;
 						return;
 					}
 					let diceRollResult = rollDice();
@@ -219,17 +164,6 @@
 					'dash':'-'
 				}
 				const newPassphrase = diceRollGroups.join(separatorOptions[document.querySelectorAll('[name=separator]:checked')[0].value]);
-				// WIP history feature
-				// if (
-				// 	!newPassphrase.includes(loadingSuffix) 
-				// 	&& numbers.value.length === 5 * numwords.value | 0 
-				// 	&& (previouspassphrases.firstChild ? 
-				// 		previouspassphrases.firstElementChild.getAttribute('data-dicerolls') !== numbers.value
-				// 		: true)
-
-				// ) {
-				// 	previouspassphrases.insertAdjacentHTML('afterbegin',`<h3 class="previouspassphrase" data-dicerolls="${numbers.value}">${newPassphrase}</h3>`);
-				// }
 				passphrase.innerText = newPassphrase;
 			}
 

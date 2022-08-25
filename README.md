@@ -12,6 +12,8 @@ I think this is better than the xkcd passphrase generator because it uses a bett
 
 It's a single html file. Download the .html file onto your computer and run it locally. There are no web requests except for a stupid github shortcut icon to the link back here. Also no javascript frameworks or anything like that. I know right? 
 
+Tested in latest Chrome / Firefox
+
 ## Implementation
 
 I hacked it together without any frameworks, it does use a generator function and other modern Javascript features. It's a hack, but whatever.

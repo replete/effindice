@@ -1,5 +1,8 @@
 # Effindice 🎲🎲🎲🎲🎲
 
+![Screen Shot 2022-08-26 at 21 41 12](https://user-images.githubusercontent.com/812139/186987746-581c6af4-cc26-4491-b186-4eafa0048e5c.png)
+
+
 ## Browser-based Passphrase generator 
 
 This is a single page run-in-browser web application that generates passphrases using the [EFF Dice-Based Passphrase wordlist and methodology](https://www.eff.org/dice) .. for lazy people.
@@ -26,5 +29,3 @@ Fortuna's minified script is 35KB. That's most of the payload just for random nu
 
 ## Demo
 [Latest release on github pages](https://replete.github.io/effindice/), published automatically.
-
-No promises on it being up to date.

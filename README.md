@@ -10,6 +10,8 @@ I think this is better than the xkcd passphrase generator because it uses a bett
 
 ## Using this application
 
+[Latest release on github pages](https://replete.github.io/effindice/), published automatically.
+
 It's a single html file. Download the .html file onto your computer and run it locally. There are no web requests except for a stupid github shortcut icon to the link back here. Also no javascript frameworks or anything like that. I know right? 
 
 Tested in latest Chrome / Firefox
@@ -23,6 +25,6 @@ I tried a few pRNGs and experimented with online 'truly random' sources of RNG d
 Fortuna's minified script is 35KB. That's most of the payload just for random number generation. Bigger is better, I only wish it was 10MB.
 
 ## Demo
-You lazy git. That's okay, [here you go](https://replete.nu/effindice). 
+[Latest release on github pages](https://replete.github.io/effindice/), published automatically.
 
 No promises on it being up to date.

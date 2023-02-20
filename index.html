@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf8"/>
-		<title>Effindice Passphrase generator v0.4 = EFF Dice-Generated Passphrases for lazy people</title>
+		<title>Effindice Passphrase generator v0.5 = EFF Dice-Generated Passphrases for lazy people</title>
 		<style>
 			*:not(p) {box-sizing: border-box; margin:0; font-family:system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; text-align:center}
 			main {padding:20px}
@@ -32,13 +32,31 @@
 			.result {min-height:200px; padding:40px 20px; background:#efefef; display:flex; align-items:center; justify-content: center; flex-direction:column; margin-bottom:10px; border-radius:10px;}
 			.passphrase {padding: 0 0 15px 0; font-size:3em; cursor:text; line-height:1.1em;word-break: break-word}
 			a {color: #000}
+			#passphrase:hover,
+			.item:hover {
+				position:relative;
+				cursor: pointer;
+			}
+			#passphrase:hover::after,
+			.item:hover::after {
+				content:'copy';
+				display:block;
+				position:absolute;
+				color:rgba(0,0,0,.3);
+				font-size:12px;
+				line-height:1em;
+				border-radius:.25em;
+				right:10px;
+				bottom:10px;
+			}
+
 		</style>
 	</head>
 	<body onload="generatePassphrase()">
 		
 		<main>
 			<header>
-				<h1>Effindice v0.4</h1>
+				<h1>Effindice v0.5</h1>
 				<h2>Dice-Generated Passphrases for lazy people </h2>
 				<p>
 					An experiment in digitizing the <a href="https://www.eff.org/dice">EFF Dice-Generated Passphrases</a> method using the <a href="https://en.wikipedia.org/wiki/Fortuna_(PRNG)">Fortuna pRNG</a>.<br/>
@@ -61,7 +79,7 @@
 				</form>
 			</div>
 			<div class="result">
-				<h3 id="passphrase" class="passphrase"></h3>
+				<h3 id="passphrase" class="passphrase" onclick="copyTextToClipboard(this)"></h3>
 			</div>
 			<div id="numbersbox">
 				<input id="numbers" type="text" readonly/>
@@ -86,6 +104,11 @@
 		</script>
 
 		<script id="app">
+
+			function copyTextToClipboard(el){
+				navigator.clipboard.writeText(el.innerText);
+				console.debug(`copyTextToClipboard(): copied '${el.innerText}' to clipboard.`);
+			}
 
 			fortuna.init();
 			
@@ -161,7 +184,7 @@
 			}
 			
 			function displayPassphrase(multipleGenerator) {
-				let loadingSuffix = '_';
+				let loadingSuffix = '🎲';
 				let diceRollGroups = numbers.value.trim().match(new RegExp('.{1,5}', 'g'));
 				diceRollGroups = diceRollGroups.map(group => {
 					if (group.length == 5) {
@@ -184,7 +207,7 @@
 				if (isCompletePassphrase && multipleGenerator) {
 					const next = multipleGenerator.next();
 
-					multiplepassphrases.innerHTML = `<div class="item">${newPassphrase}</div>\n` + multiplepassphrases.innerHTML;
+					multiplepassphrases.innerHTML = `<div class="item" onclick="copyTextToClipboard(this)">${newPassphrase}</div>\n` + multiplepassphrases.innerHTML;
 					if (next.done) {
 						generatemultiple.disabled = false;
 						multiplecount.disabled = false;
